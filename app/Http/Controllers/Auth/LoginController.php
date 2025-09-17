@@ -17,7 +17,6 @@ class LoginController extends Controller
     // Proses login
     public function login(Request $request)
     {
-        // Validasi input
         $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -26,11 +25,20 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Jika login berhasil
-            return redirect()->intended('dashboard'); 
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            // Arahkan berdasarkan role
+            if ($user->role === 'admin') {
+                return redirect()->intended('/admin/dashboard'); // Arahkan ke dashboard admin
+            } elseif ($user->role === 'student') {
+                return redirect()->intended('/student/dashboard'); // Arahkan ke dashboard mahasiswa
+            }
+
+            return redirect('/');
         }
 
-        // Jika gagal
         return back()->withErrors([
             'username' => 'Username atau password salah.',
         ]);
