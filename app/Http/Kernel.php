@@ -30,6 +30,6 @@ class Kernel extends HttpKernel
         // ===============================================
         // TAMBAHKAN BARIS INI DI BAGIAN BAWAH
         // ===============================================
-        'role' => \App\Http\Middleware\CheckRole::class,
+        
     ];
 }
