@@ -1,51 +1,52 @@
 @extends('layouts.admin')
 
-@section('title', 'Kelola Mata Kuliah')
+@section('title', 'Kelola Mahasiswa')
 
 @section('content')
-    <h1>Daftar Mata Kuliah</h1>
+    <h1>Daftar Mahasiswa</h1>
 
     @if (session('success'))
         <div class="success-message">
             {{ session('success') }}
         </div>
     @endif
-    
-    <a href="{{ route('admin.courses.create') }}" style="display:inline-block; padding: 10px; background-color: #007bff; color: white; text-decoration:none; border-radius:5px;">+ Tambah Mata Kuliah</a>
-    <br><br>
+
+    <a href="{{ route('admin.students.create') }}" style="display:inline-block; margin-bottom: 20px; padding: 10px; background-color: #007bff; color: white; text-decoration:none; border-radius:5px;">+ Tambah Mahasiswa</a>
 
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Kode Matkul</th>
-                <th>Nama Matkul</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Tanggal Dibuat</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($courses as $index => $course)
+            @forelse ($students as $index => $student)
                 <tr>
-                    <td>{{ $courses->firstItem() + $index }}</td>
-                    <td>{{ $course->kode_matkul }}</td>
-                    <td>{{ $course->nama_matkul }}</td>
+                    <td>{{ $students->firstItem() + $index }}</td>
+                    <td>{{ $student->username }}</td>
+                    <td>{{ $student->role }}</td>
+                    <td>{{ $student->created_at->format('d M Y') }}</td>
                     <td>
-                        <a href="{{ route('admin.courses.edit', $course->id) }}" style="color: #ffc107;">Edit</a>
-                        <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.students.show', $student->id) }}" style="color: #17a2b8; text-decoration: none;">Detail</a> |
+                        <a href="{{ route('admin.students.edit', $student->id) }}" style="color: #ffc107; text-decoration: none;">Edit</a> |
+                        <form action="{{ route('admin.students.destroy', $student->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus mata kuliah ini?')" style="border:none; background:transparent; color:red; cursor:pointer;">Hapus</button>
+                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus mahasiswa ini?')" style="border:none; background:transparent; color:red; cursor:pointer; padding:0; font-family: sans-serif; font-size: 1em;">Hapus</button>
                         </form>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">Tidak ada data mata kuliah.</td>
+                    <td colspan="5" style="text-align: center;">Tidak ada data mahasiswa.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
     <br>
-    {{ $courses->links() }}
-@endsection
+    {{ $students->

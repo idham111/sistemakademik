@@ -29,6 +29,17 @@ class CourseController extends Controller
         Course::create($request->all());
         return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil ditambahkan.');
     }
+    
+    // app/Http/Controllers/Admin/CourseController.php
+
+// ... (method index, create, store biarkan saja)
+
+public function show(Course $course)
+{
+    return view('admin.courses.show', compact('course'));
+}
+
+// ... (method edit, update, destroy biarkan saja)
 
     public function edit(Course $course)
     {

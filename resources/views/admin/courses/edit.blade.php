@@ -1,30 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Edit Mahasiswa</title>
-    <style>body { font-family: sans-serif; margin: 2em; } .error { color: red; font-size: 0.9em; }</style>
-</head>
-<body>
-    <h1>Form Edit Mahasiswa</h1>
-    <a href="{{ route('admin.students.index') }}"><< Kembali</a>
+@extends('layouts.admin')
+
+@section('title', 'Edit Mata Kuliah')
+
+@section('content')
+    <h1>Form Edit Mata Kuliah</h1>
+
+    <a href="{{ route('admin.courses.index') }}"><< Kembali ke Daftar Mata Kuliah</a>
     <br><br>
-    <form action="{{ route('admin.students.update', $student->id) }}" method="POST">
+
+    {{-- Tampilkan error validasi jika ada --}}
+    @if ($errors->any())
+        <div style="color: red; margin-bottom: 20px;">
+            <strong>Whoops! Ada beberapa masalah dengan input Anda.</strong><br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    {{-- === BAGIAN YANG DIPERBAIKI === --}}
+    <form action="{{ route('admin.courses.update', $course->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div>
-            <label>Username:</label><br>
-            <input type="text" name="username" value="{{ old('username', $student->username) }}" required>
-            @error('username') <div class="error">{{ $message }}</div> @enderror
+
+        <div style="margin-bottom: 15px;">
+            <label for="kode_matkul">Kode Mata Kuliah:</label><br>
+            <input type="text" id="kode_matkul" name="kode_matkul" value="{{ old('kode_matkul', $course->kode_matkul) }}" required style="width: 300px; padding: 5px;">
         </div>
-        <br>
-        <div>
-            <label>Password Baru (Opsional):</label><br>
-            <input type="password" name="password">
-            @error('password') <div class="error">{{ $message }}</div> @enderror
-            <small>Kosongkan jika tidak ingin mengubah password.</small>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="nama_matkul">Nama Mata Kuliah:</label><br>
+            <input type="text" id="nama_matkul" name="nama_matkul" value="{{ old('nama_matkul', $course->nama_matkul) }}" required style="width: 300px; padding: 5px;">
         </div>
-        <br>
-        <button type="submit">Update</button>
-    </form>
-</body>
-</html>
+
+        <div style="margin-bottom

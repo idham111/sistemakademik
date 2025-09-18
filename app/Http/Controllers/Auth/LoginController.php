@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    // Tampilkan form login
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // Proses login
     public function login(Request $request)
     {
         $request->validate([
@@ -25,17 +23,22 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            $request->session()->regenerate(); // Regenerasi session untuk keamanan
 
             $user = Auth::user();
 
-            // Arahkan berdasarkan role
+            // === BAGIAN YANG DIPERBAIKI ===
+            // Arahkan berdasarkan role pengguna
             if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard'); // Arahkan ke dashboard admin
-            } elseif ($user->role === 'student') {
-                return redirect()->intended('/student/dashboard'); // Arahkan ke dashboard mahasiswa
+                return redirect()->intended(route('admin.dashboard'));
             }
 
+            if ($user->role === 'student') {
+                return redirect()->intended(route('student.dashboard'));
+            }
+            // =============================
+
+            // Fallback jika role tidak terdefinisi
             return redirect('/');
         }
 
@@ -44,10 +47,11 @@ class LoginController extends Controller
         ]);
     }
 
-    // Logout
     public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
 }
