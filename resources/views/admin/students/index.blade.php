@@ -42,11 +42,12 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" style="text-align: center;">Tidak ada data mahasiswa.</td>
+                    <td colspan="4" style="text-align: center;">Tidak ada data mahasiswa.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
     <br>
-    {{ $students->
+    {{ $students->links() }}
+@endsection

@@ -13,7 +13,7 @@
     
     <br>
     
-    {{-- Tombol untuk melihat daftar mata kuliah --}}
+    {{-- Link untuk melihat daftar mata kuliah --}}
     <a href="{{ route('student.courses.index') }}" style="display:inline-block; padding: 10px 15px; background-color: #007bff; color: white; text-decoration:none; border-radius:5px;">
         Lihat Daftar Mata Kuliah
     </a>

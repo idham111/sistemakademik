@@ -1,34 +1,34 @@
 @extends('layouts.admin')
 
-@section('title', 'Detail Mata Kuliah')
+@section('title', 'Detail Mahasiswa')
 
 @section('content')
-    <h1>Detail Mata Kuliah</h1>
+    <h1>Detail Mahasiswa</h1>
 
-    <a href="{{ route('admin.courses.index') }}"><< Kembali ke Daftar Mata Kuliah</a>
+    <a href="{{ route('admin.students.index') }}"><< Kembali ke Daftar Mahasiswa</a>
     <br><br>
 
-    {{-- Kode di bawah ini telah diperbaiki dari $student menjadi $course --}}
+    {{-- Kode di bawah ini telah diperbaiki dari $course menjadi $student --}}
     <table style="width: 50%;">
         <tr>
-            <th style="width: 30%; text-align: left;">Kode Mata Kuliah</th>
-            <td>{{ $course->kode_matkul }}</td>
+            <th style="width: 30%; text-align: left;">ID Pengguna</th>
+            <td>{{ $student->id }}</td>
         </tr>
         <tr>
-            <th style="text-align: left;">Nama Mata Kuliah</th>
-            <td>{{ $course->nama_matkul }}</td>
+            <th style="text-align: left;">Username</th>
+            <td>{{ $student->username }}</td>
         </tr>
         <tr>
-            <th style="text-align: left; vertical-align: top;">Deskripsi</th>
-            <td>{{ $course->deskripsi ?? 'Tidak ada deskripsi.' }}</td>
+            <th style="text-align: left;">Role</th>
+            <td>{{ $student->role }}</td>
         </tr>
         <tr>
-            <th style="text-align: left;">Dibuat Pada</th>
-            <td>{{ $course->created_at->format('d M Y, H:i') }}</td>
+            <th style="text-align: left;">Tanggal Terdaftar</th>
+            <td>{{ $student->created_at->format('d M Y, H:i') }}</td>
         </tr>
         <tr>
-            <th style="text-align: left;">Diperbarui Pada</th>
-            <td>{{ $course->updated_at->format('d M Y, H:i') }}</td>
+            <th style="text-align: left;">Terakhir Diperbarui</th>
+            <td>{{ $student->updated_at->format('d M Y, H:i') }}</td>
         </tr>
     </table>
-@endsection
+@endsection9k
