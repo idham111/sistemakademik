@@ -10,7 +10,7 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::latest()->paginate(10);
+        $courses = Course::latest()->paginate(5);
         return view('admin.courses.index', compact('courses'));
     }
 
@@ -21,25 +21,24 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
+        // PERUBAHAN: Menambahkan validasi untuk 'sks'
         $request->validate([
             'kode_matkul' => 'required|unique:courses,kode_matkul|max:10',
             'nama_matkul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'sks'         => 'required|integer|min:1', // Pastikan SKS adalah angka
+            'deskripsi'   => 'nullable|string',
         ]);
+
         Course::create($request->all());
-        return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil ditambahkan.');
+
+        return redirect()->route('admin.courses.index')
+            ->with('success', 'Mata kuliah berhasil ditambahkan.');
     }
-    
-    // app/Http/Controllers/Admin/CourseController.php
 
-// ... (method index, create, store biarkan saja)
-
-public function show(Course $course)
-{
-    return view('admin.courses.show', compact('course'));
-}
-
-// ... (method edit, update, destroy biarkan saja)
+    public function show(Course $course)
+    {
+        return view('admin.courses.show', compact('course'));
+    }
 
     public function edit(Course $course)
     {
@@ -48,18 +47,25 @@ public function show(Course $course)
 
     public function update(Request $request, Course $course)
     {
+        // PERUBAHAN: Menambahkan validasi untuk 'sks' saat update
         $request->validate([
             'kode_matkul' => 'required|max:10|unique:courses,kode_matkul,' . $course->id,
             'nama_matkul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'sks'         => 'required|integer|min:1',
+            'deskripsi'   => 'nullable|string',
         ]);
+
         $course->update($request->all());
-        return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil diperbarui.');
+
+        return redirect()->route('admin.courses.index')
+            ->with('success', 'Mata kuliah berhasil diperbarui.');
     }
 
     public function destroy(Course $course)
     {
         $course->delete();
-        return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil dihapus.');
+
+        return redirect()->route('admin.courses.index')
+            ->with('success', 'Mata kuliah berhasil dihapus.');
     }
 }

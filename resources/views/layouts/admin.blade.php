@@ -51,5 +51,18 @@
     <div class="content">
         @yield('content')
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUrl = window.location.href;
+        const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+        sidebarLinks.forEach(link => {
+            if (currentUrl.startsWith(link.href)) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+@stack('scripts')
 </body>
 </html>

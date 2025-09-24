@@ -34,5 +34,16 @@
             <label for="nama_matkul">Nama Mata Kuliah:</label><br>
             <input type="text" id="nama_matkul" name="nama_matkul" value="{{ old('nama_matkul', $course->nama_matkul) }}" required style="width: 300px; padding: 5px;">
         </div>
+       <div style="margin-bottom: 15px;">
+      <label for="sks">Jumlah SKS:</label><br>
+      <input type="number" id="sks" name="sks" value="{{ old('sks', $course->sks) }}" required style="width: 300px; padding: 5px;">
+       </div>
 
-        <div style="margin-bottom
+        <div style="margin-bottom: 15px;">
+            <label for="deskripsi">Deskripsi (Opsional):</label><br>
+            <textarea id="deskripsi" name="deskripsi" rows="4" style="width: 300px; padding: 5px;">{{ old('deskripsi', $course->deskripsi) }}</textarea>
+        </div>
+
+        <button type="submit" style="padding: 10px 20px;">Simpan</button>
+    </form>
+@endsection
